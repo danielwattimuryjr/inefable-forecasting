@@ -12,7 +12,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -35,7 +35,6 @@ class UpdateProductRequest extends FormRequest
             'variasi' => [
                 'required',
                 'string',
-                'min:5',
                 'max:50'
             ],
             'nama_produk' => [

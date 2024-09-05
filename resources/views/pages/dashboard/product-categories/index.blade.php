@@ -28,25 +28,25 @@
                         </thead>
                         <tbody>
                             @if(!$productCategories->isEmpty())
-                                @foreach($productCategories as $category)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $category->nama_kategori }}</td>
-                                        <td>
-                                            <button 
-                                                class="btn btn-danger btn-sm ml-1 delete-btn" 
-                                                onclick="confirmDelete(this)" 
-                                                data-delete-url="{{ route('productCategories.destroy', $category) }}"
-                                            >
-                                                Hapus
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($productCategories as $category)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $category->nama_kategori }}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm ml-1 delete-btn" onclick="confirmDelete(this)"
+                                        data-delete-url="{{ route('productCategories.destroy', $category) }}">
+                                        Hapus
+                                    </button>
+
+                                    <a href="{{ route('productCategories.edit', $category)}}"
+                                        class="btn btn-warning btn-sm">Ubah</a>
+                                </td>
+                            </tr>
+                            @endforeach
                             @else
-                                <tr>
-                                    <td colspan="4">Data masih kosong</td>
-                                </tr>
+                            <tr>
+                                <td colspan="4">Data masih kosong</td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
@@ -75,19 +75,19 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: deleteUrl,  
-                            type: 'DELETE',  
+                            url: deleteUrl,
+                            type: 'DELETE',
                             data: {
-                                _token: '{{ csrf_token() }}'  
+                                _token: '{{ csrf_token() }}'
                             },
-                            success: function(response) {
-                                if (response.success) {  
+                            success: function (response) {
+                                if (response.success) {
                                     Swal.fire(
                                         'Dihapus!',
                                         'Jenis produk telah dihapus.',
                                         'success'
                                     ).then(() => {
-                                        window.location.reload();  
+                                        window.location.reload();
                                     });
                                 } else {
                                     Swal.fire(
@@ -97,7 +97,7 @@
                                     );
                                 }
                             },
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 Swal.fire(
                                     'Error!',
                                     'Terjadi kesalahan saat menghapus jenis produk.',
@@ -109,5 +109,5 @@
                 });
             }
         </script>
-    </x-slot>
+    </x-slot:script>
 </x-layouts.app-layout>

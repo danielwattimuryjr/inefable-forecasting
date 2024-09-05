@@ -18,7 +18,8 @@ class Product extends Model
         'nama_produk'
     ];
 
-    public function productCategory(): BelongsTo {
+    public function productCategory(): BelongsTo
+    {
         return $this->belongsTo(ProductCategory::class);
     }
 }

@@ -15,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::with(
+        $products = Product::with(
             'productCategory'
-        )->orderBy('created_at', 'updated_at')->get();
+        )->orderBy('id', 'ASC')->get();
 
         return view('pages.dashboard.products.index', [
             'products' => $products
@@ -30,8 +30,8 @@ class ProductController extends Controller
     public function create()
     {
         $productCategories = ProductCategory::orderBy('id')
-            ->get();   
-        
+            ->get();
+
         return view('pages.dashboard.products.create', [
             'productCategories' => $productCategories
         ]);
@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $productCategories = ProductCategory::orderBy('id')
-            ->get();   
+            ->get();
 
         return view('pages.dashboard.products.edit', [
             'product' => $product,
@@ -92,11 +92,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-
-        return to_route('products.index')->with([
-            'success' => true,
-            'message' => 'Product Berhasil dihapus'
+        return response()->json([
+            'success' => $product->delete()
         ]);
     }
 }
