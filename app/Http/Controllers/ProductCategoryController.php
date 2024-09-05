@@ -3,8 +3,89 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Models\ProductCategory;
+use \App\Http\Requests\StoreProductCategoryRequest;
+use \App\Http\Requests\UpdateProductCategoryRequest;
 
 class ProductCategoryController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $productCategories = ProductCategory::orderBy('updated_at', 'created_at')
+            ->get();
+
+        return view('pages.dashboard.product-categories.index', [
+            'productCategories' => $productCategories
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('pages.dashboard.product-categories.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreProductCategoryRequest $request)
+    {
+        ProductCategory::create($request->validated());
+
+        return to_route('productCategories.index')->with([
+            'success' => true,
+            'message' => "Kategori Produk berhasil ditambahkan"
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(ProductCategory $productCategory)
+    {
+        return view('pages.dashboard.product-categories.show', [
+            'productCategory' => $productCategory
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(ProductCategory $productCategory)
+    {
+        return view('pages.dashboard.product-categories.edit', [
+            'productCategory' => $productCategory
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    {
+        $productCategory->update($request->validated());
+
+        return to_route('productCategories.index')->with([
+            'success' => true,
+            'message' => 'Kategori produk berhasil diperbaharui'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(ProductCategory $productCategory)
+    {
+        $productCategory->delete();
+
+        return to_route('productCategories.index')->with([
+            'success' => true,
+            'message' => 'Kategori produk berhasil dihapus'
+        ]);
+    }
 }
