@@ -39,13 +39,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="data_produk.php" class="nav-link">
+          <a href="{{ route('products.index') }}" class="nav-link">
             <i class="nav-icon fas fa-box"></i>
             <p>Data Produk</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="data_jenis_produk.php" class="nav-link">
+          <a href="{{ route('productCategories.index') }}" class="nav-link">
             <i class="nav-icon fas fa-box"></i>
             <p>Data Jenis Produk</p>
           </a>

@@ -14,7 +14,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $productCategories = ProductCategory::orderBy('updated_at', 'created_at')
+        $productCategories = ProductCategory::orderBy('id', 'ASC')
             ->get();
 
         return view('pages.dashboard.product-categories.index', [
@@ -82,10 +82,5 @@ class ProductCategoryController extends Controller
     public function destroy(ProductCategory $productCategory)
     {
         $productCategory->delete();
-
-        return to_route('productCategories.index')->with([
-            'success' => true,
-            'message' => 'Kategori produk berhasil dihapus'
-        ]);
     }
 }
