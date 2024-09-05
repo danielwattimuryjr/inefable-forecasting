@@ -36,7 +36,6 @@
                                             <button 
                                                 class="btn btn-danger btn-sm ml-1 delete-btn" 
                                                 onclick="confirmDelete(this)" 
-                                                data-id="{{ $category->id }}"
                                                 data-delete-url="{{ route('productCategories.destroy', $category) }}"
                                             >
                                                 Hapus
@@ -62,7 +61,6 @@
     <x-slot:script>
         <script>
             function confirmDelete(button) {
-                const id = button.getAttribute('data-id');
                 const deleteUrl = button.getAttribute('data-delete-url');
 
                 Swal.fire({
@@ -77,19 +75,27 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: deleteUrl,  // URL didapat dari data-delete-url
-                            type: 'DELETE',  // Pastikan tipe request DELETE
+                            url: deleteUrl,  
+                            type: 'DELETE',  
                             data: {
-                                _token: '{{ csrf_token() }}'  // Kirimkan CSRF token untuk keamanan
+                                _token: '{{ csrf_token() }}'  
                             },
                             success: function(response) {
-                                Swal.fire(
-                                    'Dihapus!',
-                                    'Jenis produk telah dihapus.',
-                                    'success'
-                                ).then(() => {
-                                    window.location.reload();
-                                });
+                                if (response.success) {  
+                                    Swal.fire(
+                                        'Dihapus!',
+                                        'Jenis produk telah dihapus.',
+                                        'success'
+                                    ).then(() => {
+                                        window.location.reload();  
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Error!',
+                                        'Gagal menghapus jenis produk.',
+                                        'error'
+                                    );
+                                }
                             },
                             error: function(xhr, status, error) {
                                 Swal.fire(
