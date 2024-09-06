@@ -80,7 +80,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.21/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-
+  @if(session('response'))
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      @if (session('response.success'))
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: "{{ session('response.message') }}",
+        });
+      @else
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "{{ session('response.message') }}",
+      });
+      @endif
+    });
+  </script>
+  @endif
   {{ $script ?? '' }}
 </body>
 

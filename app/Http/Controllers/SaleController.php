@@ -27,7 +27,12 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::orderBy('nama_produk', 'ASC')
+            ->get(['id', 'nama_produk', 'kode_produk']);
+
+        return view('pages.dashboard.sales.create', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -35,7 +40,14 @@ class SaleController extends Controller
      */
     public function store(StoreSaleRequest $request)
     {
-        //
+        Sale::create($request->validated());
+
+        return to_route('products.show', $request->product_id)->with([
+            'response' => [
+                'success' => true,
+                'message' => 'Data penjualan produk berhasil ditambahkan'
+            ]
+        ]);
     }
 
     /**
@@ -51,7 +63,13 @@ class SaleController extends Controller
      */
     public function edit(Sale $sale)
     {
-        //
+        $products = Product::orderBy('nama_produk', 'ASC')
+            ->get(['id', 'nama_produk', 'kode_produk']);
+
+        return view('pages.dashboard.sales.edit', [
+            'sale' => $sale,
+            'products' => $products
+        ]);
     }
 
     /**
@@ -59,7 +77,14 @@ class SaleController extends Controller
      */
     public function update(UpdateSaleRequest $request, Sale $sale)
     {
-        //
+        $sale->update($request->validated());
+
+        return to_route('products.show', $request->product_id)->with([
+            'response' => [
+                'success' => true,
+                'message' => 'Data penjualan produk berhasil diperbaharui'
+            ]
+        ]);
     }
 
     /**

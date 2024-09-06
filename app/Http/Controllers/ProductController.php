@@ -45,8 +45,10 @@ class ProductController extends Controller
         Product::create($request->validated());
 
         return to_route('products.index')->with([
-            'success' => true,
-            'message' => 'Product Berhasil ditambahkan'
+            'response' => [
+                'success' => true,
+                'message' => 'Product Berhasil ditambahkan'
+            ]
         ]);
     }
 
@@ -88,8 +90,10 @@ class ProductController extends Controller
         $product->update($request->validated());
 
         return to_route('products.index')->with([
-            'success' => true,
-            'message' => 'Product Berhasil diperbaharui'
+            'response' => [
+                'success' => true,
+                'message' => 'Product Berhasil diperbaharui'
+            ]
         ]);
     }
 

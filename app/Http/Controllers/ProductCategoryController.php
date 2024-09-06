@@ -39,8 +39,10 @@ class ProductCategoryController extends Controller
         ProductCategory::create($request->validated());
 
         return to_route('productCategories.index')->with([
-            'success' => true,
-            'message' => "Kategori Produk berhasil ditambahkan"
+            'response' => [
+                'success' => true,
+                'message' => "Kategori Produk berhasil ditambahkan"
+            ]
         ]);
     }
 
@@ -49,7 +51,7 @@ class ProductCategoryController extends Controller
      */
     public function show(ProductCategory $productCategory)
     {
-    
+
     }
 
     /**
@@ -70,8 +72,10 @@ class ProductCategoryController extends Controller
         $productCategory->update($request->validated());
 
         return to_route('productCategories.index')->with([
-            'success' => true,
-            'message' => 'Kategori produk berhasil diperbaharui'
+            'response' => [
+                'success' => true,
+                'message' => 'Kategori produk berhasil diperbaharui'
+            ]
         ]);
     }
 

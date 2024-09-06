@@ -24,7 +24,7 @@ class UpdateSaleRequest extends FormRequest
     public function rules(): array
     {
         $products = Product::get(['id'])->pluck('id');
-        $sales = $this->route('sales');
+        $sale = $this->route('sale');
 
         return [
             'product_id' => [
@@ -34,11 +34,11 @@ class UpdateSaleRequest extends FormRequest
             'periode_penjualan' => [
                 'required',
                 'date',
-                Rule::unique('sales')->ignore($sales)
+                Rule::unique('sales')->ignore($sale)
             ],
             'jumlah_penjualan' => [
                 'required',
-                'decimal'
+                'integer'
             ]
         ];
     }

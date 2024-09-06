@@ -37,7 +37,8 @@ class StoreSaleRequest extends FormRequest
             ],
             'jumlah_penjualan' => [
                 'required',
-                'decimal'
+                'integer',
+                'min:0'
             ]
         ];
     }
