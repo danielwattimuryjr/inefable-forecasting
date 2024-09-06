@@ -67,10 +67,6 @@
 
     <x-slot:script>
         <script>
-            $(document).ready(function () {
-                $('#dataTable').DataTable();
-            })
-
             function confirmDelete(button) {
                 const deleteUrl = $(button).data('delete-url');
 

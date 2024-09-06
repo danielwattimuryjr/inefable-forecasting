@@ -60,10 +60,10 @@
         </li>
 
         <li class="nav-item">
-          <a href="manage_users.php" class="nav-link">
+          <a href="{{ route('users.index') }}" class="nav-link">
             <i class="nav-icon fas fa-user-plus"></i>
             <p>
-              Tambah Pengguna
+              Data Pengguna
             </p>
           </a>
         </li>

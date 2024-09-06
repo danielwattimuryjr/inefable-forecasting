@@ -9,5 +9,6 @@ Route::get('/', function () {
 Route::resources([
     'products' => \App\Http\Controllers\ProductController::class,
     'productCategories' => \App\Http\Controllers\ProductCategoryController::class,
-    'sales' => \App\Http\Controllers\SaleController::class
+    'sales' => \App\Http\Controllers\SaleController::class,
+    'users' => \App\Http\Controllers\UserController::class
 ]);
