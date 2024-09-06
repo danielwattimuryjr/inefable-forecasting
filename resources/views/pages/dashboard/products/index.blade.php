@@ -17,7 +17,7 @@
                             data penjualan akan ikut
                             terhapus</i>
                     </p>
-                    <table id="table_produk" class="table table-bordered table-hover">
+                    <table id="dataTable" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -67,8 +67,12 @@
 
     <x-slot:script>
         <script>
+            $(document).ready(function () {
+                $('#dataTable').DataTable();
+            })
+
             function confirmDelete(button) {
-                const deleteUrl = button.getAttribute('data-delete-url');
+                const deleteUrl = $(button).data('delete-url');
 
                 Swal.fire({
                     title: 'Konfirmasi Penghapusan',

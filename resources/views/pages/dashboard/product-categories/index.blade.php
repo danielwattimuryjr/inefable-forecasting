@@ -23,6 +23,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Jenis Produk</th>
+                                <th>Jumlah Produk</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -32,6 +33,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $category->nama_kategori }}</td>
+                                <td>{{ $category->products_count }}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm ml-1 delete-btn" onclick="confirmDelete(this)"
                                         data-delete-url="{{ route('productCategories.destroy', $category) }}">
@@ -60,8 +62,12 @@
 
     <x-slot:script>
         <script>
+            $(document).ready(function () {
+                $('#table_produk').DataTable();
+            })
+
             function confirmDelete(button) {
-                const deleteUrl = button.getAttribute('data-delete-url');
+                const deleteUrl = $(button).data('delete-url');
 
                 Swal.fire({
                     title: 'Konfirmasi Penghapusan',

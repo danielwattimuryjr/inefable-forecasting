@@ -55,6 +55,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $product->load([
+            'sales' => function ($query) {
+                $query->orderBy('periode_penjualan', 'DESC');
+            }
+        ]);
+
         return view('pages.dashboard.products.show', [
             'product' => $product
         ]);

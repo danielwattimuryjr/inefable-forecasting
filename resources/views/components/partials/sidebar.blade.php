@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="data_penjualan.php" class="nav-link">
+          <a href="{{ route('sales.index') }}" class="nav-link">
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>Data Penjualan</p>
           </a>

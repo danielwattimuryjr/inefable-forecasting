@@ -14,7 +14,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $productCategories = ProductCategory::orderBy('id', 'ASC')
+        $productCategories = ProductCategory::withCount('products')
+            ->orderBy('id', 'ASC')
             ->get();
 
         return view('pages.dashboard.product-categories.index', [
@@ -48,9 +49,7 @@ class ProductCategoryController extends Controller
      */
     public function show(ProductCategory $productCategory)
     {
-        return view('pages.dashboard.product-categories.show', [
-            'productCategory' => $productCategory
-        ]);
+    
     }
 
     /**
