@@ -4,11 +4,13 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Data Produk</h3>
+                    @if(auth()->user()->role == 'admin' || auth()->user()->role == 'direktur_operasional')
                     <div class="card-tools">
                         <a href="{{ route('products.create') }}" class="btn btn-success">
                             <i class="bi bi-plus-circle"></i> Tambah Data Produk
                         </a>
                     </div>
+                    @endif
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -26,7 +28,9 @@
                                 <th>Jenis Produk</th>
                                 <th>Warna</th>
                                 <th>Variasi</th>
+                                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'direktur_operasional')
                                 <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +43,7 @@
                                 <td>{{ $product->productCategory->nama_kategori }}</td>
                                 <td>{{ $product->warna }}</td>
                                 <td>{{ $product->variasi }}</td>
+                                @if(auth()->user()->role == 'admin' || auth()->user()->role == 'direktur_operasional')
                                 <td>
                                     <button class="btn btn-danger btn-sm ml-1 delete-btn" onclick="confirmDelete(this)"
                                         data-delete-url="{{ route('products.destroy', $product) }}">
@@ -48,6 +53,7 @@
                                     <a href="{{ route('products.edit', $product)}}"
                                         class="btn btn-warning btn-sm">Ubah</a>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                             @else

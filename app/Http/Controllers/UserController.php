@@ -15,6 +15,7 @@ class UserController extends Controller
     {
         $users = User::orderBy('created_at', 'ASC')
             ->where('role', '<>', 'direktur_operasional')
+            ->where('id', '<>', auth()->user()->id)
             ->get();
 
         return view('pages.dashboard.users.index', [

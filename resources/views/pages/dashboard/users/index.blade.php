@@ -4,11 +4,13 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Data Pengguna</h3>
+          @if(auth()->user()->role == 'admin')
           <div class="card-tools">
             <a href="{{ route('users.create') }}" class="btn btn-success">
               <i class="bi bi-plus-circle"></i> Tambah Data Pengguna
             </a>
           </div>
+          @endif
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -20,8 +22,12 @@
                 <th>Email</th>
                 <th>Jabatan</th>
                 <th>Username</th>
+                @if(auth()->user()->role != 'user')
                 <th>Role</th>
+                @endif
+                @if(auth()->user()->role == 'admin')
                 <th>Action</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -33,7 +39,11 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->jabatan }}</td>
                 <td>{{ $user->username }}</td>
+                @if(auth()->user()->role != 'user')
                 <td>{{ $user->role }}</td>
+                @endif
+
+                @if(auth()->user()->role == 'admin')
                 <td>
                   <button class="btn btn-danger btn-sm ml-1 delete-btn" onclick="confirmDelete(this)"
                     data-delete-url="{{ route('users.destroy', $user) }}">
@@ -42,6 +52,7 @@
 
                   <a href="{{ route('users.edit', $user)}}" class="btn btn-warning btn-sm">Ubah</a>
                 </td>
+                @endif
               </tr>
               @endforeach
               @else

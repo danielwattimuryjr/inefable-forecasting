@@ -25,34 +25,30 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-          <a href="index.php" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Beranda
-            </p>
-          </a>
-        </li>
+        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+          <i class="nav-icon fas fa-tachometer-alt"></i>
+          <p>
+            Beranda
+          </p>
+        </x-nav-link>
+
         @if(auth()->user()->role == 'direktur_operasional')
 
-        <li class="nav-item">
-          <a href="{{ route('sales.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-shopping-cart"></i>
-            <p>Data Penjualan</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('products.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-box"></i>
-            <p>Data Produk</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('productCategories.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-box"></i>
-            <p>Data Jenis Produk</p>
-          </a>
-        </li>
+        <x-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.*')">
+          <i class="nav-icon fas fa-shopping-cart"></i>
+          <p>Data Penjualan</p>
+        </x-nav-link>
+
+        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+          <i class="nav-icon fas fa-box"></i>
+          <p>Data Produk</p>
+        </x-nav-link>
+
+        <x-nav-link :href="route('productCategories.index')" :active="request()->routeIs('productCategories.*')">
+          <i class="nav-icon fas fa-box"></i>
+          <p>Data Jenis Produk</p>
+        </x-nav-link>
+
         <li class="nav-item">
           <a href="prediksi.php" class="nav-link">
             <i class="nav-icon fas fa-calculator"></i>
@@ -63,37 +59,30 @@
         </li>
         @endif
         @if(auth()->user()->role == 'admin')
-        <li class="nav-item">
-          <a href="{{ route('users.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-user-plus"></i>
-            <p>
-              Data Pengguna
-            </p>
-          </a>
-        </li>
+        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+          <i class="nav-icon fas fa-user-plus"></i>
+          <p>
+            Data Pengguna
+          </p>
+        </x-nav-link>
         @endif
 
         @if(auth()->user()->role == 'user')
-
-        <li class="nav-item">
-          <a href="prediksi.php" class="nav-link">
-            <i class="nav-icon fas fa-calculator"></i>
-            <p>
-              Lihat Prediksi
-            </p>
-          </a>
-        </li>
+        <x-nav-link href="akwoakwo.php" :active="request()->routeIs('forecasts')">
+          <i class="nav-icon fas fa-calculator"></i>
+          <p>
+            Lihat Prediksi
+          </p>
+        </x-nav-link>
         @endif
 
-        <li class="nav-item">
-          <a href="user_info.php" class="nav-link">
-            <i class="nav-icon fas fa-clipboard-check"></i>
+        <x-nav-link :href="route('profiles.index')" :active="request()->routeIs('profiles.*')">
+          <i class="nav-icon fas fa-clipboard-check"></i>
+          <p>
+            Profile
+          </p>
+        </x-nav-link>
 
-            <p>
-              Info Pengguna
-            </p>
-          </a>
-        </li>
 
         <form method="POST" action="{{ route('logout') }}" class="mt-2">
           @csrf
