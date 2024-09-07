@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use \App\Models\ProductCategory;
 use \App\Http\Requests\StoreProductCategoryRequest;
@@ -86,6 +87,19 @@ class ProductCategoryController extends Controller
     {
         return response()->json([
             'success' => $productCategory->delete()
+        ]);
+    }
+
+    public function getCategoryProducts(Request $request)
+    {
+        $categoryId = $request->id;
+
+        // Fetch the products for the given category
+        $products = Product::where('product_category_id', $categoryId)->get(['nama_produk']);
+
+        // Return response as JSON
+        return response()->json([
+            'products' => $products
         ]);
     }
 }

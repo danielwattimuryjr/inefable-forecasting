@@ -37,6 +37,9 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
+              @if (request()->routeIs('dashboard'))
+              <h1>Selamat Datang, {{ auth()->user()->nama }}</h1>
+              @endif
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">

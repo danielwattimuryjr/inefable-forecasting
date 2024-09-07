@@ -16,14 +16,15 @@
         <img src="/template/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
       </div>
       <div class="info">
-        <a href="index.php" class="d-block">test</a>
+        <a href="index.php" class="d-block">
+          {{ auth()->user()->username}}
+        </a>
       </div>
     </div>
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
         <li class="nav-item">
           <a href="index.php" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -32,6 +33,8 @@
             </p>
           </a>
         </li>
+        @if(auth()->user()->role == 'direktur_operasional')
+
         <li class="nav-item">
           <a href="{{ route('sales.index') }}" class="nav-link">
             <i class="nav-icon fas fa-shopping-cart"></i>
@@ -58,7 +61,8 @@
             </p>
           </a>
         </li>
-
+        @endif
+        @if(auth()->user()->role == 'admin')
         <li class="nav-item">
           <a href="{{ route('users.index') }}" class="nav-link">
             <i class="nav-icon fas fa-user-plus"></i>
@@ -67,7 +71,9 @@
             </p>
           </a>
         </li>
+        @endif
 
+        @if(auth()->user()->role == 'user')
 
         <li class="nav-item">
           <a href="prediksi.php" class="nav-link">
@@ -77,6 +83,7 @@
             </p>
           </a>
         </li>
+        @endif
 
         <li class="nav-item">
           <a href="user_info.php" class="nav-link">
@@ -87,15 +94,12 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="logout.php" class="nav-link">
-            <i class="fas fa-sign-out-alt"></i>
-            <!-- <i class="nav-icon bi bi-box-arrow-left"></i> -->
-            <p>
-              Logout
-            </p>
-          </a>
-        </li>
+
+        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+          @csrf
+          <input type="submit" value="Logout" class="btn btn-sm btn-danger" style="width: 100%;">
+        </form>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
