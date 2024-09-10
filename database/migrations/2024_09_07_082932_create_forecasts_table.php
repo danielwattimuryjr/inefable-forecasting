@@ -11,11 +11,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('forecasts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-            $table->date('periode_penjualan');
-            $table->decimal('jumlah_penjualan');
+            $table->date('periode');
+            $table->integer('value');
+            $table->float('alpha');
+            $table->decimal('mape')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('forecasts');
     }
 };

@@ -4,6 +4,10 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Detail Produk</h3>
+
+          <div class="card-tools">
+            <a href="{{route('forecasts', $product)}}" class="btn btn-primary btn-sm">Jalankan Prediksi</a>
+          </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -96,7 +100,7 @@
 
         Swal.fire({
           title: 'Konfirmasi Penghapusan',
-          text: 'Apakah Anda yakin ingin menghapus data penjualan ini?',
+          text: 'Apakah Anda yakin ingin menghapus data ini?',
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -115,7 +119,7 @@
                 if (response.success) {
                   Swal.fire(
                     'Dihapus!',
-                    'Data penjualan telah dihapus.',
+                    'Data  telah dihapus.',
                     'success'
                   ).then(() => {
                     window.location.reload();
@@ -123,7 +127,7 @@
                 } else {
                   Swal.fire(
                     'Error!',
-                    'Gagal menghapus data penjualan.',
+                    'Gagal menghapus data .',
                     'error'
                   );
                 }
@@ -131,7 +135,7 @@
               error: function (xhr, status, error) {
                 Swal.fire(
                   'Error!',
-                  'Terjadi kesalahan saat menghapus data penjualan.',
+                  'Terjadi kesalahan saat menghapus data.',
                   'error'
                 );
               }

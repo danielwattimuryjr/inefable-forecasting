@@ -28,4 +28,9 @@ class Product extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function forecasts(): HasMany
+    {
+        return $this->hasMany(Forecast::class);
+    }
 }
