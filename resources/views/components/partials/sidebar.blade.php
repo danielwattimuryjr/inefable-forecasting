@@ -49,14 +49,12 @@
           <p>Data Jenis Produk</p>
         </x-nav-link>
 
-        <li class="nav-item">
-          <a href="prediksi.php" class="nav-link">
-            <i class="nav-icon fas fa-calculator"></i>
-            <p>
-              Prediksi
-            </p>
-          </a>
-        </li>
+        <x-nav-link :href="route('forecasts.index')" :active="request()->routeIs('forecasts.*')">
+          <i class="nav-icon fas fa-calculator"></i>
+          <p>
+            Prediksi
+          </p>
+        </x-nav-link>
         @endif
         @if(auth()->user()->role == 'admin')
         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
@@ -68,7 +66,7 @@
         @endif
 
         @if(auth()->user()->role == 'user')
-        <x-nav-link href="akwoakwo.php" :active="request()->routeIs('forecasts')">
+        <x-nav-link :href="route('forecasts.index')" :active="request()->routeIs('forecasts')">
           <i class="nav-icon fas fa-calculator"></i>
           <p>
             Lihat Prediksi

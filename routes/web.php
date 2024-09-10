@@ -20,10 +20,21 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class)->except(['show']);
 
-    Route::prefix('profiles/')->name('profiles.')->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])->name('index');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
-        Route::patch('/edit', [ProfileController::class, 'update'])->name('update');
+    Route::prefix('profiles/')
+        ->name('profiles.')
+        ->controller(ProfileController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/edit', 'edit')->name('edit');
+            Route::patch('/edit', 'update')->name('update');
+    });
+
+    Route::prefix('forecasts/')
+        ->name('forecasts.')
+        ->controller(ForecastController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
     });
 
     Route::get('/get-category-products', [ProductCategoryController::class, 'getCategoryProducts'])->name('category.products');

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ProductCategory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreForecastRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreForecastRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +23,13 @@ class StoreForecastRequest extends FormRequest
      */
     public function rules(): array
     {
+        $productCategories = ProductCategory::get()->pluck('id');
+
         return [
-            //
+            'product_category_id' => [
+                'required',
+                Rule::in($productCategories)
+            ]
         ];
     }
 }
