@@ -23,12 +23,10 @@ class StoreForecastRequest extends FormRequest
      */
     public function rules(): array
     {
-        $productCategories = ProductCategory::get()->pluck('id');
-
         return [
             'product_category_id' => [
                 'required',
-                Rule::in($productCategories)
+                'exists:product_categories,id'
             ]
         ];
     }

@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/edit', 'edit')->name('edit');
             Route::patch('/edit', 'update')->name('update');
-    });
+        });
 
     Route::prefix('forecasts/')
         ->name('forecasts.')
@@ -35,11 +35,9 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'store')->name('store');
-    });
+        });
 
     Route::get('/get-category-products', [ProductCategoryController::class, 'getCategoryProducts'])->name('category.products');
-
-    Route::get('/forecast/{product}', [ForecastController::class, 'forecast'])->name('forecasts');
 });
 
 

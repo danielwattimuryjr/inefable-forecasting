@@ -18,17 +18,8 @@ class ForecastController extends Controller
         $this->forecastService = $forecastService;
     }
 
-    public function forecast(Product $product)
+    public function index()
     {
-        // Panggil service untuk melakukan forecast
-        $this->forecastService->forecast($product);
-
-        return response()->json([
-            'message' => 'Forecasting berhasil dilakukan untuk produk ' . $product->nama_produk
-        ]);
-    }
-
-    public function index() {
         $productCategories = ProductCategory::orderBy('nama_kategori', 'ASC')
             ->get();
 
@@ -37,11 +28,10 @@ class ForecastController extends Controller
         ]);
     }
 
-    public function store(StoreForecastRequest $request) {
+    public function store(StoreForecastRequest $request)
+    {
         $validated = $request->validated();
-
-        $productCount = Product::where('product_category_id', $validated['product_category_id'])
-            ->count();
+        $productCount = Product::where('product_category_id', $validated['product_category_id'])->count();
 
         if ($productCount == 0) {
             return back()->with('response', [
@@ -52,7 +42,7 @@ class ForecastController extends Controller
 
         return back()->with('response', [
             'success' => true,
-            'message' => "Nice"
+            'message' => "Forecast berhasil untuk kategori {$validated['product_category_id']}",
         ]);
     }
 }
