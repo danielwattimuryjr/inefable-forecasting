@@ -18,6 +18,13 @@ class ForecastController extends Controller
         $this->forecastService = $forecastService;
     }
 
+
+    public function getAvailableYears(int $productCategoryId): JsonResponse
+    {
+        $years = $this->forecastService->getAvailableYears($productCategoryId);
+        return response()->json($years);
+    }
+
     public function index()
     {
         $productCategories = ProductCategory::orderBy('nama_kategori', 'ASC')
@@ -30,19 +37,39 @@ class ForecastController extends Controller
 
     public function store(StoreForecastRequest $request)
     {
+        // $validated = $request->validated();
+        // $productCount = Product::where('product_category_id', $validated['product_category_id'])->count();
+
+        // if ($productCount == 0) {
+        //     return back()->with('response', [
+        //         'success' => false,
+        //         'message' => "Produk masih 0"
+        //     ]);
+        // }
+
+        // return back()->with('response', [
+        //     'success' => true,
+        //     'message' => "Forecast berhasil untuk kategori {$validated['product_category_id']}",
+        // ]);
+
         $validated = $request->validated();
-        $productCount = Product::where('product_category_id', $validated['product_category_id'])->count();
+        $productCategoryId = $validated['product_category_id'];
+
+        $productCount = Product::where('product_category_id', $productCategoryId)->count();
 
         if ($productCount == 0) {
-            return back()->with('response', [
+            return response()->json([
                 'success' => false,
-                'message' => "Produk masih 0"
-            ]);
+                'message' => "Tidak ada produk dalam kategori ini"
+            ], 400);
         }
 
-        return back()->with('response', [
+        $forecastResult = $this->forecastService->calculateForecast($productCategoryId);
+
+        return response()->json([
             'success' => true,
-            'message' => "Forecast berhasil untuk kategori {$validated['product_category_id']}",
+            'message' => "Forecast berhasil untuk kategori {$productCategoryId}",
+            'data' => $forecastResult
         ]);
     }
 }
