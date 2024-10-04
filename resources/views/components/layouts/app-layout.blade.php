@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $pageTitle ?? 'Inefable Forecasting'}}</title>
+  <title>{{ $pageTitle ?? env('APP_NAME', 'Inefable Forecasting')}}</title>
   <link rel="stylesheet" href="/template/plugins/fontawesome-free/css/all.min.css" />
   <link rel="stylesheet" href="/template/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
   <link rel="stylesheet" href="/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
