@@ -20,12 +20,9 @@ class RoleMiddleware
             return to_route('login');
         }
 
-        // Mengambil user yang sedang login
         $user = Auth::user();
 
-        // Memeriksa apakah role user ada dalam list roles yang diberikan
         if (!in_array($user->role, $roles)) {
-            // Arahkan ke halaman akses ditolak, atau kembalikan response lainnya
             abort(403, 'Unauthorized action.');
         }
 

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ForecastController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -38,6 +40,21 @@ Route::middleware('auth')->group(function () {
         });
 
     Route::get('/get-category-products', [ProductCategoryController::class, 'getCategoryProducts'])->name('category.products');
+
+    Route::prefix('exports/')
+        ->name('exports.')
+        ->controller(ExportController::class)
+        ->group(function() {
+            Route::get('/products', 'productsExport')->name('products');
+            Route::get('/productCategories', 'productCategoriesExport')->name('productCategories');
+        });
+
+    Route::prefix('imports/')
+        ->name('imports.')
+        ->controller(ImportController::class)
+        ->group(function() {
+            Route::get('/products', 'productsImport')->name('products');
+        });
 });
 
 
