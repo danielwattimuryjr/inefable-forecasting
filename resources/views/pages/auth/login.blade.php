@@ -36,7 +36,7 @@
               <input type="submit" value="Login" class="btn btn-block btn-success">
 
 
-              <a href="forgot_password_form.php" class="btn btn-link">Lupa Password</a>
+              <a href="<?= route('password.request') ?>" class="btn btn-link">Lupa Password</a>
             </div>
           </form>
         </div>

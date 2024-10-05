@@ -36,7 +36,10 @@ Route::middleware('auth')->group(function () {
         ->controller(ForecastController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::post('/', 'store')->name('store');
+            Route::post('/', 'show')->name('show');
+            Route::post('/{productCategory}', 'store')->name('store');
+            Route::delete('/{forecast}', 'delete')->name('delete');
+            Route::delete('/', 'truncate')->name('truncate');
         });
 
     Route::get('/get-category-products', [ProductCategoryController::class, 'getCategoryProducts'])->name('category.products');
@@ -44,16 +47,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('exports/')
         ->name('exports.')
         ->controller(ExportController::class)
-        ->group(function() {
-            Route::get('/products', 'productsExport')->name('products');
-            Route::get('/productCategories', 'productCategoriesExport')->name('productCategories');
+        ->group(function () {
+            Route::get('/sales', 'salesExport')->name('sales');
+            Route::get('/forecasts', 'forecastsExport')->name('forecasts');
         });
 
     Route::prefix('imports/')
         ->name('imports.')
         ->controller(ImportController::class)
-        ->group(function() {
-            Route::get('/products', 'productsImport')->name('products');
+        ->group(function () {
+            Route::post('/sales', 'salesImport')->name('sales');
         });
 });
 
