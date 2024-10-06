@@ -67,8 +67,10 @@ class ForecastController extends Controller
 
     public function destroy(Forecast $forecast)
     {
+        $forecast->delete();
+
         return back()->with('response', [
-            'success' => $forecast->delete(),
+            'success' => true,
             'message' => 'Data forecast berhasil dihapus'
         ]);
     }
@@ -80,6 +82,17 @@ class ForecastController extends Controller
         return back()->with('response', [
             'success' => true,
             'message' => 'Seluruh data forecast berhasil dihapus'
+        ]);
+    }
+
+    public function getForecastDetail(Request $request)
+    {
+        $forecastId = $request->id;
+
+        $forecast = Forecast::with('product.productCategory')->find($forecastId);
+
+        return response()->json([
+            'forecast' => $forecast
         ]);
     }
 }

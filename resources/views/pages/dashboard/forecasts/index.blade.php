@@ -108,9 +108,39 @@
                                     <td>{{ $forecast->periode}}</td>
                                     <td>{{ $forecast->value}}</td>
                                     <td>{{ $forecast->created_at->toFormattedDateString()}}</td>
-                                    <td>{{ $forecast->created_at}}</td>
-                                    <td>{{ $forecast->created_at}}</td>
+                                    <td>
+                                        <p>Up : {{ $forecast->voteCount()['up']}}</p>
+                                        <p>Down : {{ $forecast->voteCount()['down']}}</p>
 
+                                        <div class="d-flex flex-row">
+                                            <form
+                                                action="{{ route('forecasts.votes.store', ['forecast' => $forecast, 'vote' => 'upvote'] )}}"
+                                                method="post" class="mr-2">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="bi bi-hand-thumbs-up"></i>
+                                                </button>
+                                            </form>
+
+                                            <form
+                                                action="{{ route('forecasts.votes.store', ['forecast' => $forecast, 'vote' => 'downvote'] )}}"
+                                                method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-hand-thumbs-down"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary mb-2 button-forecast-detail"
+                                                data-forecast-id="{{ $forecast->id }}">Detail</button>
+                                            <button class="btn btn-sm btn-danger" onclick="confirmDelete(this)"
+                                                data-delete-url="{{ route('forecasts.destroy', $forecast)}}">Hapus</button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -124,6 +154,79 @@
     <x-slot:script>
         <script>
             $(document).ready(function() {
+                $('.button-forecast-detail').click(function () {
+
+                    var forecastId = $(this).data('forecast-id');
+
+                    // Make the Ajax request
+                    $.ajax({
+                        url: '/get-forecast-detail', // Route that handles the request
+                        type: 'GET',
+                        data: {
+                            id: forecastId
+                        },
+                        success: function (response) {
+                            var forecast = response.forecast
+                            var productDetail = forecast.product
+                            var productCategoryDetail = productDetail.product_category
+
+                            Swal.fire({
+                            title: 'Detail Prediksi',
+                            html: `
+                            <p style="font-style: italic; margin-top: 15px;">
+                                <strong>Note untuk MAPE :</strong><br>
+                                &lt; 10%: Sangat Baik<br>
+                                10%-20%: Baik<br>
+                                20%-50%: Cukup<br>
+                                &gt; 50%: Buruk
+                            </p>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Nama Produk:</th>
+                                        <td>${productDetail.nama_produk}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jenis Produk:</th>
+                                        <td>${productCategoryDetail.nama_kategori}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ukuran:</th>
+                                        <td>${productDetail.variasi}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Periode:</th>
+                                        <td>${forecast.periode}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prediksi:</th>
+                                        <td>${forecast.value} pcs</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Alpha:</th>
+                                        <td>${forecast.alpha}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MAPE:</th>
+                                        <td>${forecast.mape} %</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tanggal Prediksi:</th>
+                                        <td>${forecast.created_at}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            `,
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            $('#modalContent').html('Something went wrong. Please try again.');
+                        }
+                    });
+                });
+
                 var table = $('#prediksi-table').DataTable({
                     "paging": true,
                     "lengthChange": true,
